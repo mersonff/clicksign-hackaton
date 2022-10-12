@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   api_guard_routes for: 'users'
+
+  resources :stages, only: %i[create destroy]
 end
