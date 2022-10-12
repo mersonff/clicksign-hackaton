@@ -3,16 +3,19 @@
 require 'rails_helper'
 
 RSpec.describe '/matches', type: :request do
+  let(:user) { create(:user) }
+  let(:token) { jwt_and_refresh_token(user, 'user') }
+  let(:headers) { { Authorization: "Bearer #{token.first}" }}
   let(:valid_attributes) do
     {
-      home_team: create(:team),
-      away_team: create(:team),
+      home_team_id: create(:team).id,
+      away_team_id: create(:team).id,
       home_team_goals: 0,
       away_team_goals: 0,
       start_at: Time.zone.now,
       finished_at: Time.zone.now + 90.minutes,
       current_time: Time.zone.now + 10.minutes,
-      stage: create(:stage)
+      stage_id: create(:stage).id
     }
   end
 
@@ -30,7 +33,7 @@ RSpec.describe '/matches', type: :request do
   end
 
   let(:valid_headers) do
-    {}
+    headers
   end
 
   describe 'GET /index' do
@@ -42,9 +45,10 @@ RSpec.describe '/matches', type: :request do
   end
 
   describe 'GET /show' do
+    let!(:match) { create(:match) }
+
     it 'renders a successful response' do
-      match = Match.create! valid_attributes
-      get match_url(match), as: :json
+      get match_url(match), headers: valid_headers, as: :json
       expect(response).to be_successful
     end
   end
@@ -105,19 +109,20 @@ RSpec.describe '/matches', type: :request do
     end
 
     context 'with invalid parameters' do
+      let!(:match) { create(:match) }
+
       it 'renders a JSON response with errors for the match' do
-        match = Match.create! valid_attributes
         patch match_url(match),
               params: { match: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to match(a_string_including('application/json'))
       end
     end
   end
 
   describe 'DELETE /destroy' do
+    let!(:match) { create(:match) }
+
     it 'destroys the requested match' do
-      match = Match.create! valid_attributes
       expect do
         delete match_url(match), headers: valid_headers, as: :json
       end.to change(Match, :count).by(-1)

@@ -18,7 +18,6 @@ class MatchesController < ApplicationController
   # POST /matches.json
   def create
     @match = Match.new(match_params)
-
     if @match.save
       render :show, status: :created, location: @match
     else
@@ -39,7 +38,7 @@ class MatchesController < ApplicationController
   # DELETE /matches/1
   # DELETE /matches/1.json
   def destroy
-    @match.destroy
+    @match.destroy!
   end
 
   private

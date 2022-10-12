@@ -26,7 +26,7 @@ RSpec.describe Team, type: :model do
     end
 
     context 'with same name twice' do
-      before { create(:team) }
+      before { create(:team, name: 'Brazil') }
       let(:second_team) { build(:team, name: 'Brazil') }
 
       it { expect(second_team).to_not be_valid }
