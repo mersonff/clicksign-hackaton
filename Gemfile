@@ -2,18 +2,22 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.3'
+
 gem 'jbuilder'
 gem 'kredis'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 7.0.4'
 gem 'redis', '~> 4.0'
-gem 'sqlite3', '~> 1.4'
+gem 'pg', '~> 1.1'
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem 'bcrypt', '~> 3.1.7'
 
 # Use JWT Authentication
 gem 'api_guard'
+
+# Load .env files
+gem 'dotenv-rails', '~> 2.7.6'
 
 gem 'bootsnap', require: false
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
