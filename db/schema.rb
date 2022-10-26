@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_11_225937) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_26_223147) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -46,6 +49,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_11_225937) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_blacklisted_tokens_on_user_id"
+  end
+
+  create_table "match_batch_imports", force: :cascade do |t|
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "matches", force: :cascade do |t|
