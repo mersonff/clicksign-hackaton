@@ -1,11 +1,9 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
 
   api_guard_routes for: 'users'
 
   resources :stages, only: %i[create destroy]
   resources :matches
+
+  post '/matches/batch_import', to: 'match_batch_import#batch_import', as: :match_batch_import
 end
