@@ -11,6 +11,9 @@ volume
 .idea
 .vscode
 
+# Ignore env files
+.env
+
 # Ignore bundler config.
 /.bundle
 
@@ -23,6 +26,7 @@ volume
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+.byebug_history
 
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
@@ -38,3 +42,4 @@ volume
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+

@@ -17,3 +17,25 @@ services:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "./localstack-init.sh:/docker-entrypoint-initaws.d/00-localstack-init.sh"
+
+  postgres:
+    container_name: db-hackathon
+    environment:
+      POSTGRES_PASSWORD: postgres
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  redis:
+    container_name: redis-hackathon
+    image: redis:latest
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/data
+
+volumes:
+  postgres-data:
+  redis-data:

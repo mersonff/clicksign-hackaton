@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Match, type: :model do
-  
+
   it { should belong_to(:home_team).class_name('Team') }
   it { should belong_to(:away_team).class_name('Team') }
   it { should belong_to(:stage) }
@@ -20,7 +20,6 @@ RSpec.describe Match, type: :model do
     let(:match) { build(:match, home_team: team, away_team: team) }
 
     it 'is invalid' do
-      byebug
       expect(match).to_not be_valid
     end
   end
