@@ -1,0 +1,2 @@
+queues:
+  default: 'http://localhost:4566/000000000000/matches-import'
