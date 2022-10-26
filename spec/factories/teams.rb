@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :team do
-    name { 'Brazil' }
+    name { Faker::Team.name }
     description { 'Tocou Neymar é gol' }
   end
 end

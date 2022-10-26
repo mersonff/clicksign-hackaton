@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   api_guard_routes for: 'users'
 
   resources :stages, only: %i[create destroy]
+  resources :matches
 end
