@@ -6,9 +6,13 @@ RSpec.describe 'Stages', type: :request do
   let(:headers) { { Authorization: "Bearer #{token.first}" } }
 
   describe 'GET /stages/' do
-    let(:stage) { create(:user) }
-    let(:stage2) { create(:user) }
     let(:request) { get stages_path, headers: headers }
+
+    before do
+      2.times do
+        create(:stage)
+      end
+    end
 
     it do
       request

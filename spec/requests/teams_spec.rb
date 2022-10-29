@@ -6,9 +6,13 @@ RSpec.describe 'Teams', type: :request do
   let(:headers) { { Authorization: "Bearer #{token.first}" } }
 
   describe 'GET /teams/' do
-    let(:team) { create(:user) }
-    let(:team2) { create(:user) }
     let(:request) { get teams_path, headers: headers }
+
+    before do
+      2.times do
+        create(:team)
+      end
+    end
 
     it do
       request
