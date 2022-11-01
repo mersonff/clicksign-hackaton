@@ -10,6 +10,8 @@ gem 'rails', '~> 7.0.4'
 gem 'redis', '~> 4.0'
 gem 'pg', '~> 1.1'
 gem 'newrelic_rpm'
+gem "sentry-ruby"
+gem "sentry-rails"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem 'bcrypt', '~> 3.1.7'
