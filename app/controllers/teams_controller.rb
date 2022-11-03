@@ -5,12 +5,10 @@ class TeamsController < ApplicationController
 
   def index
     @teams = Team.all
-
-    render json: @teams
   end
 
   def show
-    render json: @team
+    @team
   end
 
   def create
