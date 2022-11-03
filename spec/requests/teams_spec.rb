@@ -6,7 +6,7 @@ RSpec.describe 'Teams', type: :request do
   let(:headers) { { Authorization: "Bearer #{token.first}" } }
 
   describe 'GET /teams/' do
-    let(:request) { get teams_path, headers: headers }
+    let(:request) { get teams_path, headers: headers, as: :json }
 
     before do
       2.times do
@@ -22,7 +22,7 @@ RSpec.describe 'Teams', type: :request do
 
   describe 'GET /teams/:id' do
     let(:team) { create(:team) }
-    let(:request) { get team_path(team), headers: headers }
+    let(:request) { get team_path(team), headers: headers, as: :json }
 
     it do
       request
@@ -31,7 +31,7 @@ RSpec.describe 'Teams', type: :request do
   end
 
   describe 'POST /teams' do
-    let(:request) { post teams_path, params: params, headers: headers }
+    let(:request) { post teams_path, params: params, headers: headers, as: :json }
 
     describe 'when success' do
       let(:params) do
@@ -68,7 +68,7 @@ RSpec.describe 'Teams', type: :request do
 
   describe 'PATCH /teams/:id' do
     let(:team) { create(:team) }
-    let(:request) { patch team_path(team), params: params, headers: headers }
+    let(:request) { patch team_path(team), params: params, headers: headers, as: :json }
 
     describe 'when success' do
       let(:params) { { team: { name: 'Real Madrid Club de Fútbol' } } }
@@ -91,7 +91,7 @@ RSpec.describe 'Teams', type: :request do
 
   describe 'DELETE /teams/:id' do
     let(:team) { create(:team) }
-    let(:request) { delete team_path(team), headers: headers }
+    let(:request) { delete team_path(team), headers: headers, as: :json }
 
     it do
       request
