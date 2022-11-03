@@ -6,7 +6,7 @@ RSpec.describe 'Stages', type: :request do
   let(:headers) { { Authorization: "Bearer #{token.first}" } }
 
   describe 'GET /stages/' do
-    let(:request) { get stages_path, headers: headers }
+    let(:request) { get stages_path, headers: headers, as: :json }
 
     before do
       2.times do
@@ -22,7 +22,7 @@ RSpec.describe 'Stages', type: :request do
 
   describe 'GET /stages/:id' do
     let(:stage) { create(:stage) }
-    let(:request) { get stage_path(stage), headers: headers }
+    let(:request) { get stage_path(stage), headers: headers, as: :json }
 
     it do
       request
@@ -31,7 +31,7 @@ RSpec.describe 'Stages', type: :request do
   end
 
   describe 'POST /stages' do
-    let(:request) { post stages_path, params: params, headers: headers }
+    let(:request) { post stages_path, params: params, headers: headers, as: :json }
 
     describe 'when success' do
       let(:params) { { stage: { name: 'Oitavas de final' } } }
@@ -54,7 +54,7 @@ RSpec.describe 'Stages', type: :request do
 
   describe 'PATCH /stages/:id' do
     let(:stage) { create(:stage) }
-    let(:request) { patch stage_path(stage.id), params: params, headers: headers }
+    let(:request) { patch stage_path(stage.id), params: params, headers: headers, as: :json }
 
     describe 'when success' do
       let(:params) { { stage: { name: 'Oitavas de final' } } }
@@ -77,7 +77,7 @@ RSpec.describe 'Stages', type: :request do
 
   describe 'DELETE /stages/:id' do
     let(:stage) { create(:stage) }
-    let(:request) { delete stage_path(stage), headers: headers }
+    let(:request) { delete stage_path(stage), headers: headers, as: :json }
 
     it do
       request
