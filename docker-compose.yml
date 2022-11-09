@@ -2,6 +2,23 @@
 version: "3.8"
 
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - "3000:3000"
+      # Ports required for debugging
+      - "1234:1234"
+      - "26166:26168"
+    volumes:
+      - .:/app
+    env_file: .env
+    environment:
+      RAILS_ENV: development
   localstack:
     image: localstack/localstack
     ports:
@@ -39,3 +56,4 @@ services:
 volumes:
   postgres-data:
   redis-data:
+  app:
