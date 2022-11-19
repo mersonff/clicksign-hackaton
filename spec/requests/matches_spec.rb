@@ -62,7 +62,6 @@ RSpec.describe '/matches', type: :request do
       it 'renders a JSON response with the new match' do
         post matches_url,
              params: { match: valid_attributes }, headers: valid_headers, as: :json
-        byebug
         expect(response).to have_http_status(:created)
         expect(response.content_type).to match(a_string_including('application/json'))
       end
@@ -92,11 +91,16 @@ RSpec.describe '/matches', type: :request do
         }
       end
 
-      it 'updates the requested match' do
+      it 'updates the requested match', :aggregate_failures do
         match = Match.create! valid_attributes
+
+        expect(match.home_team_goals).to eq(0)
+
         patch match_url(match), params: { match: new_attributes }, headers: valid_headers, as: :json
         match.reload
-        skip('Add assertions for updated state')
+
+        expect(response).to have_http_status(:ok)
+        expect(match.home_team_goals).to eq(1)
       end
 
       it 'renders a JSON response with the match' do
