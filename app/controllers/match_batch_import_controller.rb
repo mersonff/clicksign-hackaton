@@ -1,5 +1,6 @@
-class MatchBatchImportController < ApplicationController
+# frozen_string_literal: true
 
+class MatchBatchImportController < ApplicationController
   def batch_import
     @batch = MatchBatchImport.new(
       csv: params[:csv]

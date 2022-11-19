@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe '/matches', type: :request do
   let(:user) { create(:user) }
   let(:token) { jwt_and_refresh_token(user, 'user') }
-  let(:headers) { { Authorization: "Bearer #{token.first}" }}
+  let(:headers) { { Authorization: "Bearer #{token.first}" } }
   let(:valid_attributes) do
     {
       home_team_id: create(:team).id,
@@ -13,7 +13,7 @@ RSpec.describe '/matches', type: :request do
       home_team_goals: 0,
       away_team_goals: 0,
       start_at: Time.current,
-      finished_at: Time.current + 90.minutes,
+      finished_at: 90.minutes.from_now,
       stage_id: create(:stage).id
     }
   end
@@ -25,7 +25,7 @@ RSpec.describe '/matches', type: :request do
       home_team_goals: -1,
       away_team_goals: -1,
       start_at: Time.current,
-      finished_at: Time.current + 90.minutes,
+      finished_at: 90.minutes.from_now,
       stage: create(:stage)
     }
   end
@@ -61,7 +61,7 @@ RSpec.describe '/matches', type: :request do
 
       it 'renders a JSON response with the new match' do
         post matches_url,
-             params: { match: valid_attributes }, headers: valid_headers, as: :json
+          params: { match: valid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
         expect(response.content_type).to match(a_string_including('application/json'))
       end
@@ -71,7 +71,7 @@ RSpec.describe '/matches', type: :request do
       it 'does not create a new Match' do
         expect do
           post matches_url, params: { match: invalid_attributes }, as: :json
-        end.to change(Match, :count).by(0)
+        end.not_to change(Match, :count)
       end
 
       it 'renders a JSON response with errors for the new match' do
@@ -116,7 +116,7 @@ RSpec.describe '/matches', type: :request do
 
       it 'renders a JSON response with errors for the match' do
         patch match_url(match),
-              params: { match: invalid_attributes }, headers: valid_headers, as: :json
+          params: { match: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end

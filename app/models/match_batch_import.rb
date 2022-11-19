@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 require 'csv'
 
@@ -9,7 +10,7 @@ class MatchBatchImport < ApplicationRecord
   validates :csv, attached: true, content_type: 'text/csv'
 
   def import_matches!
-    self.with_lock do
+    with_lock do
       return unless pending?
 
       processing!
@@ -23,7 +24,7 @@ class MatchBatchImport < ApplicationRecord
             away_team_goals: Integer(row['away_team_goals']),
             start_at: DateTime.parse(row['start_at']),
             finished_at: DateTime.parse(row['finished_at']),
-            stage_id: Integer(row['stage_id']),
+            stage_id: Integer(row['stage_id'])
           )
         end
       end

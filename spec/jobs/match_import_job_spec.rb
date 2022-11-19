@@ -1,9 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe MatchImportJob, type: :job do
-
   describe '#perform_now' do
-
     before do
       create_list(:stage, 7)
       create_list(:team, 32)

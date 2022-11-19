@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Stages', type: :request do
@@ -9,9 +11,7 @@ RSpec.describe 'Stages', type: :request do
     let(:request) { get stages_path, headers: headers, as: :json }
 
     before do
-      2.times do
-        create(:stage)
-      end
+      create_list(:stage, 2)
     end
 
     it do
