@@ -92,9 +92,22 @@ RSpec.describe 'Teams' do
     let(:team) { create(:team) }
     let(:request) { delete team_path(team), headers: headers, as: :json }
 
-    it do
-      request
-      expect(response).to have_http_status(:ok)
+    context 'when success' do
+      it do
+        request
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when fail' do
+      before do
+        create(:match, home_team: team)
+      end
+
+      it do
+        request
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
     end
   end
 end

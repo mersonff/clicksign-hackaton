@@ -32,11 +32,9 @@ class StagesController < ApplicationController
   def destroy
     @stage = Stage.find(params[:id])
 
-    if @stage.destroy
-      head :ok
-    else
-      render json: @stage.errors, status: :unprocessable_entity
-    end
+    head :ok if @stage.destroy
+  rescue StandardError => e
+    render json: { error: e.message }, status: :unprocessable_entity
   end
 
   private

@@ -78,9 +78,22 @@ RSpec.describe 'Stages' do
     let(:stage) { create(:stage) }
     let(:request) { delete stage_path(stage), headers: headers, as: :json }
 
-    it do
-      request
-      expect(response).to have_http_status(:ok)
+    context 'when success' do
+      it do
+        request
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when fail' do
+      before do
+        create(:match, stage: stage)
+      end
+
+      it do
+        request
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
     end
   end
 end
