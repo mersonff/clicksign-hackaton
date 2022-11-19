@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   class RegistrationController < ApiGuard::RegistrationController
     # before_action :authenticate_resource, only: [:destroy]
