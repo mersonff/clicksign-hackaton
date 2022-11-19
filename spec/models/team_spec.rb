@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Team, type: :model do
+RSpec.describe Team do
   describe 'validations' do
     context 'with valid attributes' do
       let(:team) { build(:team) }
@@ -14,15 +14,16 @@ RSpec.describe Team, type: :model do
     context 'without name' do
       let(:team) { build(:team, name: nil) }
 
-      it { expect(team).to_not be_valid }
+      it { expect(team).not_to be_valid }
       it { expect(team.save).to be(false) }
     end
 
     context 'with same name twice' do
       before { create(:team, name: 'Brazil') }
+
       let(:second_team) { build(:team, name: 'Brazil') }
 
-      it { expect(second_team).to_not be_valid }
+      it { expect(second_team).not_to be_valid }
     end
   end
 end

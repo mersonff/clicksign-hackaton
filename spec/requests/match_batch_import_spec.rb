@@ -1,17 +1,19 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "MatchBatchImports", type: :request do
+RSpec.describe 'MatchBatchImports' do
   let(:user) { create(:user) }
   let(:token) { jwt_and_refresh_token(user, 'user') }
-  let(:headers) { { Authorization: "Bearer #{token.first}" }}
+  let(:headers) { { Authorization: "Bearer #{token.first}" } }
 
-  describe "POST /matches/batch_import" do
+  describe 'POST /matches/batch_import' do
     subject(:request) { post match_batch_import_path, params: params, headers: headers, as: :multipart_form }
 
     context 'with correct attachment' do
       let(:params) do
         {
-          csv: fixture_file_upload('matches_01.csv', 'text/csv'),
+          csv: fixture_file_upload('matches_01.csv', 'text/csv')
         }
       end
 
@@ -30,7 +32,7 @@ RSpec.describe "MatchBatchImports", type: :request do
     end
 
     context 'without attachment' do
-      let(:params) {{}}
+      let(:params) { {} }
 
       it 'returns status unprocessable_entity' do
         request

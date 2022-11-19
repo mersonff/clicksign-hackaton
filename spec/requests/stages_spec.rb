@@ -1,17 +1,16 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe 'Stages', type: :request do
+RSpec.describe 'Stages' do
   let(:user) { create(:user) }
-  let(:token) { jwt_and_refresh_token(user, 'user') }
-  let(:headers) { { Authorization: "Bearer #{token.first}" } }
+  let(:headers) { { Authorization: "Bearer #{jwt_and_refresh_token(user, 'user').first}" } }
 
   describe 'GET /stages/' do
     let(:request) { get stages_path, headers: headers, as: :json }
 
     before do
-      2.times do
-        create(:stage)
-      end
+      create_list(:stage, 2)
     end
 
     it do
@@ -65,7 +64,7 @@ RSpec.describe 'Stages', type: :request do
       end
     end
 
-    describe 'when success' do
+    describe 'when fail' do
       let(:params) { { stage: { name: nil } } }
 
       it do

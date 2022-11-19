@@ -1,17 +1,16 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe 'Teams', type: :request do
+RSpec.describe 'Teams' do
   let(:user) { create(:user) }
-  let(:token) { jwt_and_refresh_token(user, 'user') }
-  let(:headers) { { Authorization: "Bearer #{token.first}" } }
+  let(:headers) { { Authorization: "Bearer #{jwt_and_refresh_token(user, 'user').first}" } }
 
   describe 'GET /teams/' do
     let(:request) { get teams_path, headers: headers, as: :json }
 
     before do
-      2.times do
-        create(:team)
-      end
+      create_list(:team, 2)
     end
 
     it do
