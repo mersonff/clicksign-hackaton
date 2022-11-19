@@ -54,7 +54,8 @@ group :test do
   gem 'brakeman'
   gem 'bundler-audit'
   gem 'database_cleaner-active_record', '~> 2.0.1'
-  gem 'simplecov', require: false, group: :test
+  gem 'simplecov', require: false
+  gem 'simplecov-json', require: false
 end
 
 group :development do
