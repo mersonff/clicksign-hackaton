@@ -12,9 +12,8 @@ RSpec.describe '/matches', type: :request do
       away_team_id: create(:team).id,
       home_team_goals: 0,
       away_team_goals: 0,
-      start_at: Time.zone.now,
-      finished_at: Time.zone.now + 90.minutes,
-      current_time: Time.zone.now + 10.minutes,
+      start_at: Time.current,
+      finished_at: Time.current + 90.minutes,
       stage_id: create(:stage).id
     }
   end
@@ -25,9 +24,8 @@ RSpec.describe '/matches', type: :request do
       away_team: create(:team),
       home_team_goals: -1,
       away_team_goals: -1,
-      start_at: Time.zone.now,
-      finished_at: Time.zone.now + 90.minutes,
-      current_time: Time.zone.now + 10.minutes,
+      start_at: Time.current,
+      finished_at: Time.current + 90.minutes,
       stage: create(:stage)
     }
   end
@@ -64,6 +62,7 @@ RSpec.describe '/matches', type: :request do
       it 'renders a JSON response with the new match' do
         post matches_url,
              params: { match: valid_attributes }, headers: valid_headers, as: :json
+        byebug
         expect(response).to have_http_status(:created)
         expect(response.content_type).to match(a_string_including('application/json'))
       end

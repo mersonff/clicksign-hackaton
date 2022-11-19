@@ -8,7 +8,6 @@ FactoryBot.define do
     away_team_goals { 2 }
     start_at { '2022-10-04 19:43:08' }
     finished_at { '2022-10-04 20:43:08' }
-    current_time { '2022-10-04 19:53:08' }
     stage { create(:stage) }
   end
 end
