@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-json.partial! 'matches/match', match: @match
+json.partial! 'matches/match', match: @match, cached: true
