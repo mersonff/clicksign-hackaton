@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_26_223147) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_19_132259) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -62,12 +62,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_26_223147) do
     t.bigint "away_team_id", null: false
     t.integer "home_team_goals", default: 0
     t.integer "away_team_goals", default: 0
-    t.time "start_at"
-    t.time "finished_at"
-    t.time "current_time"
     t.bigint "stage_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "start_at"
+    t.datetime "finished_at"
     t.index ["away_team_id"], name: "index_matches_on_away_team_id"
     t.index ["home_team_id"], name: "index_matches_on_home_team_id"
     t.index ["stage_id"], name: "index_matches_on_stage_id"
@@ -87,6 +86,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_26_223147) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_stages_on_name", unique: true
   end
 
   create_table "teams", force: :cascade do |t|
@@ -94,6 +94,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_26_223147) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_teams_on_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|

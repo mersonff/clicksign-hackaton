@@ -32,11 +32,9 @@ class TeamsController < ApplicationController
   def destroy
     @team = Team.find(params[:id])
 
-    if @team.destroy
-      head :ok
-    else
-      render json: @team.errors, status: :unprocessable_entity
-    end
+    head :ok if @team.destroy
+  rescue StandardError => e
+    render json: { error: e.message }, status: :unprocessable_entity
   end
 
   private

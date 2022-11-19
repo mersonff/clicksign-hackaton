@@ -1,17 +1,16 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe 'Stages', type: :request do
+RSpec.describe 'Stages' do
   let(:user) { create(:user) }
-  let(:token) { jwt_and_refresh_token(user, 'user') }
-  let(:headers) { { Authorization: "Bearer #{token.first}" } }
+  let(:headers) { { Authorization: "Bearer #{jwt_and_refresh_token(user, 'user').first}" } }
 
   describe 'GET /stages/' do
     let(:request) { get stages_path, headers: headers, as: :json }
 
     before do
-      2.times do
-        create(:stage)
-      end
+      create_list(:stage, 2)
     end
 
     it do
@@ -65,7 +64,7 @@ RSpec.describe 'Stages', type: :request do
       end
     end
 
-    describe 'when success' do
+    describe 'when fail' do
       let(:params) { { stage: { name: nil } } }
 
       it do
@@ -79,9 +78,22 @@ RSpec.describe 'Stages', type: :request do
     let(:stage) { create(:stage) }
     let(:request) { delete stage_path(stage), headers: headers, as: :json }
 
-    it do
-      request
-      expect(response).to have_http_status(:ok)
+    context 'when success' do
+      it do
+        request
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when fail' do
+      before do
+        create(:match, stage: stage)
+      end
+
+      it do
+        request
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
     end
   end
 end
