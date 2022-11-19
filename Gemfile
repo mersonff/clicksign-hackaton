@@ -50,6 +50,8 @@ group :development, :test do
 end
 
 group :test do
+  gem 'brakeman'
+  gem 'bundler-audit'
   gem 'database_cleaner-active_record', '~> 2.0.1'
 end
 
