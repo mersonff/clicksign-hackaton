@@ -1,0 +1,4 @@
+POST http://localhost:3000/matches
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NjgwNDExNDcsImlhdCI6MTY2Nzk1NDc0N30.aLGojOhnlHSXMXbxLDI0HlJgdUrwezAjBrPhXBSY2j0
+Content-Type: application/json
+Body: "{ "match": { "home_team_id": 1, "away_team_id": 2, "home_team_goals": 2, "away_team_goals": 0, "start_at": "2022-11-08T23:22:33Z", "finished_at": "2022-11-09T00:52:52Z", "current_time": "2022-11-09T00:22:10Z", "stage_id": 1} }"
