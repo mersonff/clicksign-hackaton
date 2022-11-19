@@ -8,8 +8,6 @@ RSpec.describe Match, type: :model do
   it { is_expected.to belong_to(:stage) }
   it { is_expected.to validate_numericality_of(:home_team_goals).is_greater_than_or_equal_to(0) }
   it { is_expected.to validate_numericality_of(:away_team_goals).is_greater_than_or_equal_to(0) }
-  it { is_expected.to validate_presence_of(:home_team) }
-  it { is_expected.to validate_presence_of(:away_team) }
   it { is_expected.to validate_presence_of(:home_team_goals) }
   it { is_expected.to validate_presence_of(:away_team_goals) }
   it { is_expected.to validate_presence_of(:start_at) }

@@ -34,5 +34,18 @@ RSpec.describe MatchImportJob, type: :job do
         expect(Match.count).to be(0)
       end
     end
+
+    context 'with a incorrect status' do
+      let(:batch) { create(:match_batch_import, :with_attachment, status: :processing) }
+
+      it 'marks batch as failed', :aggregate_failures do
+        expect(batch.processing?).to be(true)
+
+        described_class.perform_now(batch.id)
+
+        expect(batch.reload.processing?).to be(true)
+        expect(Match.count).to be(0)
+      end
+    end
   end
 end

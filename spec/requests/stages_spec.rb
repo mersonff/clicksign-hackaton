@@ -4,8 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Stages', type: :request do
   let(:user) { create(:user) }
-  let(:token) { jwt_and_refresh_token(user, 'user') }
-  let(:headers) { { Authorization: "Bearer #{token.first}" } }
+  let(:headers) { { Authorization: "Bearer #{jwt_and_refresh_token(user, 'user').first}" } }
 
   describe 'GET /stages/' do
     let(:request) { get stages_path, headers: headers, as: :json }
@@ -65,7 +64,7 @@ RSpec.describe 'Stages', type: :request do
       end
     end
 
-    describe 'when success' do
+    describe 'when fail' do
       let(:params) { { stage: { name: nil } } }
 
       it do
