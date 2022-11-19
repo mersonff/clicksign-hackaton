@@ -4,6 +4,10 @@ require 'rails_helper'
 
 RSpec.describe Team do
   describe 'validations' do
+    it { is_expected.to have_one_attached(:flag) }
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_uniqueness_of(:name) }
+
     context 'with valid attributes' do
       let(:team) { build(:team) }
 

@@ -30,21 +30,23 @@ RSpec.describe 'Teams' do
   end
 
   describe 'POST /teams' do
-    let(:request) { post teams_path, params: params, headers: headers, as: :json }
+    let(:request) { post teams_path, params: params, headers: headers, as: :multipart_form }
 
     describe 'when success' do
       let(:params) do
         {
           team: {
-            name: 'Real Madrid Club de Fútbol',
-            description: 'Lorem ipsum dolor'
+            name: 'Brazil',
+            description: 'Lorem ipsum dolor',
+            flag: fixture_file_upload('br.svg', 'image/svg+xml')
           }
         }
       end
 
-      it do
+      it 'creates new team with attached flag', :aggregate_failures do
         request
         expect(response).to have_http_status(:created)
+        expect(Team.last.flag.attached?).to be(true)
       end
     end
 
