@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe MatchImportJob, type: :job do
+RSpec.describe MatchImportJob do
   describe '#perform_now' do
     before do
       create_list(:stage, 7)

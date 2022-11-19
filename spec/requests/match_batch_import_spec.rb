@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'MatchBatchImports', type: :request do
+RSpec.describe 'MatchBatchImports' do
   let(:user) { create(:user) }
   let(:token) { jwt_and_refresh_token(user, 'user') }
   let(:headers) { { Authorization: "Bearer #{token.first}" } }

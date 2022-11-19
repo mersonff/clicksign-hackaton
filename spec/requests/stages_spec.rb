@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Stages', type: :request do
+RSpec.describe 'Stages' do
   let(:user) { create(:user) }
   let(:headers) { { Authorization: "Bearer #{jwt_and_refresh_token(user, 'user').first}" } }
 

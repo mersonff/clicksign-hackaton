@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Team, type: :model do
+RSpec.describe Team do
   describe 'validations' do
     context 'with valid attributes' do
       let(:team) { build(:team) }

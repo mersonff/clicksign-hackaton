@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe '/matches', type: :request do
+RSpec.describe '/matches' do
   let(:user) { create(:user) }
   let(:headers) { { Authorization: "Bearer #{jwt_and_refresh_token(user, 'user').first}" } }
   let(:valid_attributes) do

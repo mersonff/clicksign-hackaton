@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Teams', type: :request do
+RSpec.describe 'Teams' do
   let(:user) { create(:user) }
   let(:headers) { { Authorization: "Bearer #{jwt_and_refresh_token(user, 'user').first}" } }
 

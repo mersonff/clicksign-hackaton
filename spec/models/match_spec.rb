@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Match, type: :model do
+RSpec.describe Match do
   it { is_expected.to belong_to(:home_team).class_name('Team') }
   it { is_expected.to belong_to(:away_team).class_name('Team') }
   it { is_expected.to belong_to(:stage) }
