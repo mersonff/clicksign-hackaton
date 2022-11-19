@@ -1,6 +1,6 @@
 FROM ruby:3.0.3
 
-ENV BUNDLER_VERSION='2.3.20'
+ENV BUNDLER_VERSION='2.3.26'
 ENV APP_USER=hackathon
 
 RUN apt-get update -qq && apt-get install -y vim\
