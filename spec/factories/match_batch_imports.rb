@@ -11,5 +11,15 @@ FactoryBot.define do
         )
       end
     end
+
+    trait :with_wrong_attachment do
+      after(:build) do |match_batch_import|
+        match_batch_import.csv.attach(
+          io: Rails.root.join('spec/fixtures/files/matches_02.csv').open,
+          filename: 'matches_02.csv',
+          content_type: 'text/csv'
+        )
+      end
+    end
   end
 end

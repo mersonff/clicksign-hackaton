@@ -18,13 +18,6 @@ RSpec.describe Team, type: :model do
       it { expect(team.save).to be(false) }
     end
 
-    context 'without a description' do
-      let(:team) { build(:team, description: nil) }
-
-      it { expect(team).to_not be_valid }
-      it { expect(team.save).to be(false) }
-    end
-
     context 'with same name twice' do
       before { create(:team, name: 'Brazil') }
       let(:second_team) { build(:team, name: 'Brazil') }

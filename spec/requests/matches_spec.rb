@@ -12,9 +12,8 @@ RSpec.describe '/matches', type: :request do
       away_team_id: create(:team).id,
       home_team_goals: 0,
       away_team_goals: 0,
-      start_at: Time.zone.now,
-      finished_at: Time.zone.now + 90.minutes,
-      current_time: Time.zone.now + 10.minutes,
+      start_at: Time.current,
+      finished_at: Time.current + 90.minutes,
       stage_id: create(:stage).id
     }
   end
@@ -25,9 +24,8 @@ RSpec.describe '/matches', type: :request do
       away_team: create(:team),
       home_team_goals: -1,
       away_team_goals: -1,
-      start_at: Time.zone.now,
-      finished_at: Time.zone.now + 90.minutes,
-      current_time: Time.zone.now + 10.minutes,
+      start_at: Time.current,
+      finished_at: Time.current + 90.minutes,
       stage: create(:stage)
     }
   end
@@ -93,11 +91,16 @@ RSpec.describe '/matches', type: :request do
         }
       end
 
-      it 'updates the requested match' do
+      it 'updates the requested match', :aggregate_failures do
         match = Match.create! valid_attributes
+
+        expect(match.home_team_goals).to eq(0)
+
         patch match_url(match), params: { match: new_attributes }, headers: valid_headers, as: :json
         match.reload
-        skip('Add assertions for updated state')
+
+        expect(response).to have_http_status(:ok)
+        expect(match.home_team_goals).to eq(1)
       end
 
       it 'renders a JSON response with the match' do
