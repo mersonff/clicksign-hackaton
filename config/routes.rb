@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   resources :matches
 
   post '/matches/batch_import', to: 'match_batch_import#batch_import', as: :match_batch_import
+  mount ActionCable.server => '/cable'
 end
