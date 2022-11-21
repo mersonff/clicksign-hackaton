@@ -20,6 +20,7 @@ class Match < ApplicationRecord
 
   def self.match_format(match)
     {
+      id: match.id,
       stage: match.stage.name,
       home: match.home_team.name,
       away: match.away_team.name,
