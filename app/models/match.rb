@@ -10,21 +10,29 @@ class Match < ApplicationRecord
   validates :home_team_goals, :away_team_goals, numericality: { greater_than_or_equal_to: 0 }
   validate :home_team_cannot_be_away_team
 
+  scope :finished, -> { where(finished_at: ..Time.current) }
+
+  scope :unfinished, -> { where(start_at: ..Time.current, finished_at: Time.current..) }
+
   def home_team_cannot_be_away_team
     errors.add(:home_team, 'cannot be the same as away team') if home_team == away_team
   end
 
-  def self.update_matches!
-    unfinished.each do |match|
-      increment_goals(match)
-      verify_if_is_finished(match)
-      ActionCable.server.broadcast 'matches_channel', { match: match }
-    end
-    enqueue_next_job
+  def self.match_format(match)
+    {
+      stage: match.stage.name,
+      home: match.home_team.name,
+      away: match.away_team.name,
+      homeGoals: match.home_team_goals,
+      awayGoals: match.away_team_goals,
+      time: (Time.current - match.start_at) / 1.minute
+    }
   end
 
-  def self.unfinished
-    Match.where(finished_at: nil)
+  def self.update_matches!
+    unfinished.each { |match| increment_goals(match) }
+    broadcast_matches
+    enqueue_next_job
   end
 
   def self.increment_goals(match)
@@ -36,26 +44,14 @@ class Match < ApplicationRecord
   end
 
   def self.goals_sample
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 1].sample
-  end
-
-  def self.verify_if_is_finished(match)
-    finished_at = DateTime.current
-
-    return unless match_should_finish?(match, finished_at)
-
-    update(finished_at: finished_at)
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1].sample
   end
 
   def self.enqueue_next_job
     UpdateMatchesJob.set(wait: 1.minute).perform_later
   end
 
-  def self.overtime
-    [1, 2, 3, 4, 5].sample
-  end
-
-  def self.match_should_finish?(match, finished_at)
-    match.start_at + (90 + overtime).minutes <= finished_at
+  def self.broadcast_matches
+    ActionCable.server.broadcast 'matches_channel', { matches: unfinished.map { |match| match_format(match) } }
   end
 end

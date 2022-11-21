@@ -5,7 +5,5 @@ class MatchesChannel < ApplicationCable::Channel
     stream_from 'matches_channel'
   end
 
-  def unsubscribed
-    raise NotImplementedError
-  end
+  def unsubscribed; end
 end

@@ -3,11 +3,12 @@
 # Controller for Matches
 class MatchesController < ApplicationController
   before_action :set_match, only: %i[show update destroy]
+  skip_before_action :authenticate_and_set_user, only: %i[index show]
 
   # GET /matches
   # GET /matches.json
   def index
-    @matches = Match.all
+    @matches = Match.finished.all
   end
 
   # GET /matches/1

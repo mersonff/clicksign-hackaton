@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 json.extract! match, :id, :start_at, :finished_at
-json.home_team do
+json.home do
   json.partial! 'teams/team', team: match.home_team
   json.goals match.home_team_goals
 end
-json.away_team do
+json.away do
   json.partial! 'teams/team', team: match.away_team
   json.goals match.away_team_goals
 end
