@@ -45,7 +45,7 @@ class Match < ApplicationRecord
   end
 
   def self.goals_sample
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1].sample
+    [*[0] * 99, * [1] * 1].sample
   end
 
   def self.enqueue_next_job
