@@ -29,12 +29,11 @@ RSpec.describe Match do
     before do
       clear_enqueued_jobs
       matches
-      travel_to DateTime.current + 100.minutes
+      # travel_to DateTime.current + 100.minutes
       described_class.update_matches!
     end
 
     it :aggregate_failures do
-      expect(matches.first.reload.finished_at).not_to be_nil
       expect(UpdateMatchesJob).to have_been_enqueued
       expect do
         ActionCable.server.broadcast 'matches_channel', { match: matches.first }
@@ -43,12 +42,46 @@ RSpec.describe Match do
   end
 
   describe '#unfinished' do
-    let(:finished_match) { create(:match, finished_at: DateTime.current) }
-    let(:unfinished_match) { create(:match, finished_at: nil) }
+    context 'when previous match' do
+      let(:previoes_match) { create(:match) }
 
-    it 'returns only unfinished matches', :aggregate_failures do
-      expect(described_class.unfinished).to include(unfinished_match)
-      expect(described_class.unfinished).not_to include(finished_match)
+      before do
+        travel_to(2.hours.ago)
+        previoes_match
+        travel_back
+      end
+
+      it do
+        expect(described_class.unfinished).not_to include(previoes_match)
+      end
+    end
+
+    context 'when current match' do
+      let(:current_match) { create(:match) }
+
+      before do
+        travel_to(1.hour.ago)
+        current_match
+        travel_back
+      end
+
+      it do
+        expect(described_class.unfinished).to include(current_match)
+      end
+    end
+
+    context 'when next match' do
+      let(:next_match) { create(:match) }
+
+      before do
+        travel_to(2.hours.from_now)
+        next_match
+        travel_back
+      end
+
+      it do
+        expect(described_class.unfinished).not_to include(next_match)
+      end
     end
   end
 
@@ -61,17 +94,13 @@ RSpec.describe Match do
     end
   end
 
-  describe '#verify_if_is_finished' do
-    let(:match) { create(:match, start_at: DateTime.current, finished_at: nil) }
+  describe '#match_format' do
+    let(:match) { create(:match) }
+    let(:match_format_return) { described_class.match_format(match) }
 
-    before do
-      match
-      travel(100.minutes)
-      described_class.public_send(:verify_if_is_finished, match)
-    end
-
-    it do
-      expect(match.reload.finished_at).not_to be_nil
+    it :aggregate_failures do
+      expect(match_format_return[:home]).to eq(match.home_team.name)
+      expect(match_format_return[:away]).to eq(match.away_team.name)
     end
   end
 end
