@@ -14,10 +14,4 @@ RSpec.describe MatchesChannel do
 
     expect(subscription).to be_confirmed
   end
-
-  it 'returns error when unsubscribed' do
-    subscribe(match: match)
-
-    expect { unsubscribe }.to raise_error(NotImplementedError)
-  end
 end
