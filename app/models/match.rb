@@ -20,6 +20,7 @@ class Match < ApplicationRecord
 
   def self.match_format(match)
     {
+      id: match.id,
       stage: match.stage.name,
       home: match.home_team.name,
       away: match.away_team.name,
@@ -44,7 +45,7 @@ class Match < ApplicationRecord
   end
 
   def self.goals_sample
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1].sample
+    [*[0] * 99, * [1] * 1].sample
   end
 
   def self.enqueue_next_job
