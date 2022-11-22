@@ -35,11 +35,9 @@ RSpec.describe 'Teams' do
     describe 'when success' do
       let(:params) do
         {
-          team: {
-            name: 'Brazil',
-            description: 'Lorem ipsum dolor',
-            flag: fixture_file_upload('br.svg', 'image/svg+xml')
-          }
+          name: 'Brazil',
+          description: 'Lorem ipsum dolor',
+          flag: fixture_file_upload('br.png', 'image/png')
         }
       end
 
@@ -53,10 +51,8 @@ RSpec.describe 'Teams' do
     describe 'when fail' do
       let(:params) do
         {
-          team: {
-            name: nil,
-            description: nil
-          }
+          name: nil,
+          description: nil
         }
       end
 
@@ -72,7 +68,7 @@ RSpec.describe 'Teams' do
     let(:request) { patch team_path(team), params: params, headers: headers, as: :json }
 
     describe 'when success' do
-      let(:params) { { team: { name: 'Real Madrid Club de Fútbol' } } }
+      let(:params) { { name: 'Real Madrid Club de Fútbol' } }
 
       it do
         request
@@ -81,7 +77,7 @@ RSpec.describe 'Teams' do
     end
 
     describe 'when fail' do
-      let(:params) { { team: { name: nil } } }
+      let(:params) { { name: nil } }
 
       it do
         request

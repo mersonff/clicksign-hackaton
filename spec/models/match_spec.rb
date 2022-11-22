@@ -43,16 +43,16 @@ RSpec.describe Match do
 
   describe '#unfinished' do
     context 'when previous match' do
-      let(:previoes_match) { create(:match) }
+      let(:previous_match) { create(:match) }
 
       before do
         travel_to(2.hours.ago)
-        previoes_match
+        previous_match
         travel_back
       end
 
       it do
-        expect(described_class.unfinished).not_to include(previoes_match)
+        expect(described_class.unfinished).not_to include(previous_match)
       end
     end
 
