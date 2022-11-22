@@ -2,9 +2,9 @@
 
 def attach_flag(team, flag)
   team.flag.attach(
-    io: Rails.root.join("spec/fixtures/files/#{flag}.svg").open,
-    filename: "#{flag}.svg",
-    content_type: 'image/svg+xml'
+    io: Rails.root.join("spec/fixtures/files/#{flag}.png").open,
+    filename: "#{flag}.png",
+    content_type: 'image/png'
   )
 end
 
