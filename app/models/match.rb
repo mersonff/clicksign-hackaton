@@ -18,7 +18,13 @@ class Match < ApplicationRecord
     errors.add(:home_team, 'cannot be the same as away team') if home_team == away_team
   end
 
-  def self.match_format(match)
+  def self.flag_url(team)
+    return nil unless team.flag.attached?
+
+    Rails.application.routes.url_helpers.rails_blob_url(team.flag, host: 'http://localhost:3000')
+  end
+
+  def self.match_format(match) # rubocop:todo Metrics/AbcSize
     {
       id: match.id,
       stage: match.stage.name,
@@ -26,6 +32,8 @@ class Match < ApplicationRecord
       away: match.away_team.name,
       homeGoals: match.home_team_goals,
       awayGoals: match.away_team_goals,
+      homeFlag: flag_url(match.home_team),
+      awayFlag: flag_url(match.away_team),
       time: (Time.current - match.start_at) / 1.minute
     }
   end
